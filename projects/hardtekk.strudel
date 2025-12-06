@@ -1,0 +1,135 @@
+$: setcpm(150/4)
+
+let hardkicks1 = 
+  n(`
+    [2 - <- - - 2> -]*2
+    `) 
+  .scale("F1:minor") 
+  .lpf(1020) 
+  .lpq(slider(35,0,200,1)) 
+  .room(1) 
+  .distort("9:.6") 
+  .s("bd")
+  .color("orangered")
+  .fft(4)
+  .scope({ pos: 0.3, smear: 0.45 })
+
+let hardkicks2 = 
+  n(`
+    [[2 - 2 -] [2 - 2 -] [2 - 2 -] [0*4 - 2*2 -]]/2
+    `) 
+  .scale("F1:minor") 
+  .lpf(1020) 
+  .lpq(slider(35,0,200,1)) 
+  .room(1) 
+  .distort("6:1.4") 
+  .s("bd")
+  .color("goldenrod cyan lime")
+  .fft(6)
+  .scope({ pos: 0.6, smear: 0.95 })
+
+
+let hhats = 
+  n(`
+    [- 4 - 4]
+    `) 
+  .scale("F2:minor") 
+  .lpf(800)
+  .distort("10:.35") 
+  .s("rim")
+  .color("khaki")
+  ._spectrum()
+
+let hhats2 = hhats.
+  n(`
+    [- 4 - 4 - 4 - 4 - 4 - 4 - 4 4*4 4*16]/4
+    `) 
+  .distort("10:4") 
+  .color("cyan")
+  ._spectrum()
+
+
+let hhats3 = hhats
+  .distort("10:.45")
+  .color("deepskyblue")
+  ._spectrum()
+
+let main = n("[5*2 2 7b <6 4*2>]*2")
+  .scale("F4:minor")
+  .lpf(700) 
+  .s("sawtooth")
+  .gain(3)
+  .resonance(0.8)
+  .cutoff("<800 1200 1000 2000>")
+  .shape(0.7)
+  .crush(12)
+  .color("deeppink")
+  ._pianoroll()
+
+let main2 = n("[5*2 2 7b <6 4*2>]*2")
+  .scale("F4:minor")
+  .lpf(1000) 
+  .s("sawtooth")
+  .gain(3)
+  .resonance(0.8)
+  .cutoff("3000")
+  .shape(0.7)
+  .crush(15)
+
+
+let bass = s("saw")
+  .n("[2 1b 5 7b]/4")
+  .scale("F1:minor")
+  .gain(1.3)
+  .shape(0.6)
+  .crush(9)
+  .resonance(0.8)
+  .color("limegreen")
+  ._scope({
+    scale: 0.35,
+    thickness: 10,
+  })
+
+let bass2 = s("saw")
+  .n("[2 2 -1 0b]/4")
+  .scale("F2:minor")
+  .gain(4)
+  .shape(0.5)
+  .crush(9)
+  .resonance(0.8)
+  .color("mediumspringgreen")
+  ._scope({
+    scale: 0.35,
+    thickness: 10,
+  })
+
+let bass2_half = s("saw")
+  .n("[2 [4b 3] -1 [0b 1b]]/8")
+  .scale("F1:minor, F4:minor")
+  .gain(4)
+  .shape(0.5)
+  .crush(9)
+  .resonance(0.8)
+  .color("#00ffcc")
+  ._scope({
+    scale: 0.15,
+    thickness: 10,
+  })
+
+let bass2_breakdown = s("saw")
+  .n("[2 2 -1 0b]/4")
+  .scale("F1:minor")
+  .gain(0.6)
+  .shape(0.6)
+  .crush(9)
+  .resonance(0.8)
+
+$: arrange(
+  [4, main],
+  [4, stack(main, hhats, bass)],
+  [4, stack(main, hardkicks1, hhats, bass)],
+  [4, stack(main, hhats2, bass2_breakdown)],
+  [8, stack(main2, hardkicks2, hhats3, bass2)],
+  [2, stack(main2)],
+  [16, stack(main2, hardkicks2, hhats3, bass2_half)],
+)
