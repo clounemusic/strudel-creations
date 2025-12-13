@@ -1,0 +1,53 @@
+$: setcpm(120/4)
+
+$: note(`
+    [[D3 F3 A3 E4]
+    [Bb2 D3 F3 Bb3]
+    [A2 C#3 E3 G3]
+    [G2 A#3 A3 E#3]]
+   `).slow(4)
+  .s("gm_epiano2")
+  .adsr(".6:.2:8:.3")
+  .lpf("1300")
+  .gain(2.5)
+  .room(1)
+
+$: note(`
+    [[D3 F3 A3 E4]
+    [Bb3 D3 F4 Bb4]
+    [A2 C#3 E3 G4]
+    [G2 A#4 [A5, A3] E#4]]
+   `).slow(4)
+  .s("gm_violin")
+  .adsr(".9:.2:8:.3")
+  .lpf("2000")
+  .gain(1.2)
+  .room(1)
+
+$: note(`
+    [D2*2 Bb1 A1*2 [G1 F1]]
+   `).slow(4)
+  .s("gm_epiano2")
+  .adsr(".8:.2:8:.3")
+  .gain(3)
+  .room(1)
+
+$: note(`
+    [[D4 D3 D4 Db3] Bb*4 A3*4 [Gb3 G3 F3 Fb3]]
+   `).slow(4)
+  .s("gm_tubular_bells")
+  .adsr(".1:.1:1:.3")
+  .gain(0.45)
+  .room(2)
+  .pan("<0.7>")
+
+$: note(`
+    [<D4*2 Bb3*2 D4*2 G3*2> E#3 Fb3 [E4 <F4 F4 F4 C4>]]
+   `)
+  .s("gm_electric_guitar_clean")
+  .adsr(".1:.2:1:.3")
+  .gain(0.45)
+  .room(2)
+  .pan("<0.3>")
+
+//Dm9 → Bbmaj7 → F(add9) → Gm11 → A7sus4(b9)
